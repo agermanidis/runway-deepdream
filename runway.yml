@@ -7,4 +7,4 @@ spec:
 build_steps:
   - if_cpu: pip install tensorflow==1.15.0
   - if_gpu: pip install tensorflow-gpu==1.15.0
-  - pip install runway-python scipy
+  - pip install runway-python scipy keras
