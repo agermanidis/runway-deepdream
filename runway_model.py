@@ -37,13 +37,13 @@ max_loss = 10.
 
 command_inputs = {
     'image': runway.image,
-    'num_octaves': runway.number(default=3, min=1, max=5, step=1),
-    'iterations': runway.number(default=20, min=1, max=100, step=1),
-    'octave_scale': runway.number(default=1.4, min=1, max=3, step=0.01),
-    'features_mixed_2': runway.number(default=0.2, min=0, max=2, step=0.01),
-    'features_mixed_3': runway.number(default=0.5, min=0, max=2, step=0.01),
-    'features_mixed_4': runway.number(default=2.0, min=0, max=2, step=0.01),
-    'features_mixed_5': runway.number(default=1.5, min=0, max=2, step=0.01)
+    'num_octaves': runway.number(default=3, min=1, max=5, step=1, description="Number of scales to process the image on"),
+    'iterations': runway.number(default=20, min=1, max=100, step=1, description="Number of iterations per image scale"),
+    'octave_scale': runway.number(default=1.4, min=1, max=3, step=0.01, description="Downscaling factor for each image scale"),
+    'features_mixed_2': runway.number(default=0.2, min=0, max=2, step=0.01, description="Importance of activations at mixed 2 layer of InceptionV3"),
+    'features_mixed_3': runway.number(default=0.5, min=0, max=2, step=0.01, description="Importance of activations at mixed 3 layer of InceptionV3"),
+    'features_mixed_4': runway.number(default=2.0, min=0, max=2, step=0.01, description="Importance of activations at mixed 4 layer of InceptionV3"),
+    'features_mixed_5': runway.number(default=1.5, min=0, max=2, step=0.01, description="Importance of activations at mixed 5 layer of InceptionV3")
 }
 
 @runway.command('deepdream', inputs=command_inputs, outputs={'image': runway.image})
@@ -65,7 +65,6 @@ def deepdream(model, inputs):
     shrunk_original_img = resize_img(img, successive_shapes[0])
 
     dream = model.input
-    print('Model loaded.')
 
     # Get the symbolic outputs of each "key" layer (we gave them unique names).
     layer_dict = dict([(layer.name, layer) for layer in model.layers])
