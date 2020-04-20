@@ -48,7 +48,10 @@ command_inputs = {
 
 @runway.command('deepdream', inputs=command_inputs, outputs={'image': runway.image})
 def deepdream(model, inputs):
-    img = preprocess_image(inputs['image'])
+    pil_img = inputs['image']
+    pil_img.thumbnail((1000, 1000))
+
+    img = preprocess_image(pil_img)
 
     if K.image_data_format() == 'channels_first':
         original_shape = img.shape[2:]
